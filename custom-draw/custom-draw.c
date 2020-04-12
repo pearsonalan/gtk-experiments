@@ -3,8 +3,7 @@
 /* Surface to store current scribbles */
 static cairo_surface_t *surface = NULL;
 
-static void clear_surface(void)
-{
+static void clear_surface(void) {
   cairo_t *cr;
 
   cr = cairo_create(surface);
@@ -17,7 +16,7 @@ static void clear_surface(void)
 
 /* Create a new surface of the appropriate size to store our scribbles */
 static gboolean configure_event_cb(GtkWidget *widget, GdkEventConfigure *event,
-                                   gpointer data) {
+    gpointer data) {
   if (surface)
     cairo_surface_destroy (surface);
 
@@ -65,11 +64,8 @@ static void draw_brush(GtkWidget *widget, gdouble x, gdouble y) {
  * The ::button-press signal handler receives a GdkEventButton
  * struct which contains this information.
  */
-static gboolean
-button_press_event_cb(GtkWidget      *widget,
-                       GdkEventButton *event,
-                       gpointer        data)
-{
+static gboolean button_press_event_cb(GtkWidget *widget,
+    GdkEventButton *event, gpointer data) {
   /* paranoia check, in case we haven't gotten a configure event */
   if (surface == NULL)
     return FALSE;
@@ -92,19 +88,18 @@ button_press_event_cb(GtkWidget      *widget,
 static gboolean motion_notify_event_cb(GtkWidget *widget,
     GdkEventMotion *event, gpointer data) {
   /* paranoia check, in case we haven't gotten a configure event */
-  if (surface == NULL)
-    return FALSE;
+  if (surface == NULL) return FALSE;
 
-  if (event->state & GDK_BUTTON1_MASK)
+  if (event->state & GDK_BUTTON1_MASK) {
     draw_brush(widget, event->x, event->y);
+  }
 
   /* We've handled it, stop processing */
   return TRUE;
 }
 
 static void close_window() {
-  if (surface)
-    cairo_surface_destroy(surface);
+  if (surface) cairo_surface_destroy(surface);
 }
 
 static void activate(GtkApplication *app, gpointer user_data) {
