@@ -173,7 +173,7 @@ static void activate(GtkApplication *app, gpointer data) {
 
   drawing_area = gtk_drawing_area_new();
   /* set a minimum size */
-  gtk_widget_set_size_request(drawing_area, 100, 100);
+  gtk_widget_set_size_request(drawing_area, 400, 300);
 
   gtk_container_add(GTK_CONTAINER(frame), drawing_area);
 
