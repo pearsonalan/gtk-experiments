@@ -135,6 +135,34 @@ static gboolean motion_notify_cb(GtkWidget *widget,
   return TRUE;
 }
 
+static gboolean key_press_cb(GtkWidget *widget, GdkEventKey *event,
+    gpointer data) {
+  AppData *app_data = (AppData *)data;
+
+  assert(app_data != NULL);
+  assert(app_data->magic == APP_USER_DATA_MAGIC);
+
+	printf("key_press: keyval=%d, state=%08x\n", event->keyval, event->state);
+
+	switch (event->keyval) {
+	case GDK_KEY_F:
+	case GDK_KEY_f:
+	  gtk_window_fullscreen(GTK_WINDOW(widget));
+		break;
+
+	case GDK_KEY_Q:
+	case GDK_KEY_q:
+	  gtk_window_close(GTK_WINDOW(widget));
+	  break;
+
+	case GDK_KEY_Escape:
+	  gtk_window_unfullscreen(GTK_WINDOW(widget));
+		break;
+	}
+
+  return TRUE;
+}
+
 static void close_window_cb(GtkWidget *widget, gpointer data) {
   AppData *app_data = (AppData *)data;
 
@@ -188,6 +216,9 @@ static void activate(GtkApplication *app, gpointer data) {
                    G_CALLBACK(motion_notify_cb), data);
   g_signal_connect(drawing_area, "button-press-event",
                    G_CALLBACK(button_press_cb), data);
+
+  g_signal_connect(window, "key-press-event",
+                   G_CALLBACK(key_press_cb), data);
 
   /* Ask to receive events the drawing area doesn't normally
    * subscribe to. In particular, we need to ask for the
