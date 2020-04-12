@@ -18,7 +18,7 @@ static void clear_surface(void) {
 static gboolean configure_event_cb(GtkWidget *widget, GdkEventConfigure *event,
     gpointer data) {
   if (surface)
-    cairo_surface_destroy (surface);
+    cairo_surface_destroy(surface);
 
   surface = gdk_window_create_similar_surface(
                 gtk_widget_get_window (widget),
